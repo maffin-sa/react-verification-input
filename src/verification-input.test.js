@@ -78,6 +78,15 @@ describe("VerificationInput", () => {
     expect(screen.getByTestId("container")).toHaveTextContent("012345");
   });
 
+  it("should remove invalid chars on paste", async () => {
+    render(<VerificationInput stripInvalidChars length={6} />);
+
+    act(() => screen.getByRole("textbox").focus());
+    await userEvent.paste("012-345");
+
+    expect(screen.getByTestId("container")).toHaveTextContent("012345");
+  });
+
   it("should keep previous value if invalid code is pasted", async () => {
     render(<VerificationInput />);
     await userEvent.type(screen.getByRole("textbox"), "012345");

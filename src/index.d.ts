@@ -2,6 +2,7 @@ export interface VerificationInputProps {
   value?: string;
   length?: number;
   validChars?: string;
+  stripInvalidChars?:boolean;
   placeholder?: string;
   autoFocus?: boolean;
   passwordMode?: boolean;

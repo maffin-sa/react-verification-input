@@ -10,6 +10,7 @@ const VerificationInput = forwardRef(
       value,
       length,
       validChars,
+      stripInvalidChars,
       placeholder,
       autoFocus,
       passwordMode,
@@ -54,7 +55,11 @@ const VerificationInput = forwardRef(
     };
 
     const handleInputChange = (event) => {
-      const newInputVal = event.target.value.replace(/\s/g, "");
+      let newInputVal = event.target.value.replace(/\s/g, "");
+
+      if (stripInvalidChars) {
+        newInputVal = newInputVal.replace(RegExp(`[^${validChars}]`),"");
+      }
 
       if (RegExp(`^[${validChars}]{0,${length}}$`).test(newInputVal)) {
         if (onChange) {
@@ -170,6 +175,7 @@ VerificationInput.propTypes = {
   value: PropTypes.string,
   length: PropTypes.number,
   validChars: PropTypes.string,
+  stripInvalidChars: PropTypes.bool,
   placeholder: PropTypes.string,
   autoFocus: PropTypes.bool,
   passwordMode: PropTypes.bool,
